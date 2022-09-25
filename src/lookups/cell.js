@@ -1,0 +1,24 @@
+import { PLAYERS } from '@/lookups/player';
+
+export const CELL_TYPES = Object.freeze({
+  HOME: 'home',
+  NORMAL: 'normal',
+  FINISH_BLUE: 'finish-blue',
+  FINISH_GREEN: 'finish-green',
+  FINISH_RED: 'finish-red',
+  FINISH_YELLOW: 'finish-yellow',
+});
+
+export const CELL_TYPES_TO_FINISH = [
+  CELL_TYPES.FINISH_BLUE,
+  CELL_TYPES.FINISH_GREEN,
+  CELL_TYPES.FINISH_RED,
+  CELL_TYPES.FINISH_YELLOW,
+];
+
+export const CELL_TYPE_TO_PLAYER = Object.freeze({
+  [CELL_TYPES.FINISH_BLUE]: PLAYERS.PLAYER_BLUE,
+  [CELL_TYPES.FINISH_GREEN]: PLAYERS.PLAYER_GREEN,
+  [CELL_TYPES.FINISH_RED]: PLAYERS.PLAYER_RED,
+  [CELL_TYPES.FINISH_YELLOW]: PLAYERS.PLAYER_YELLOW,
+});

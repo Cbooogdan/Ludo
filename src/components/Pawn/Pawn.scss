@@ -1,0 +1,21 @@
+.pawn {
+  margin: 6px;
+  width: 40px;
+  height: 40px;
+  //border: 1px solid black;
+  border-radius: 50%;
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
+  color: white;
+  font-size: 22px;
+  font-weight: 900;
+  text-shadow: 0 0 12px black;
+  user-select: none;
+  transform: translate(0, 0);
+
+  &__image {
+    margin-top: -5px;
+    margin-left: -2px;
+  }
+}
