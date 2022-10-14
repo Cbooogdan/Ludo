@@ -1,4 +1,5 @@
 import { CELL_TYPES_TO_FINISH } from '@/lookups/cell';
+import { PLAYER_ORDER } from '@/lookups/player';
 
 const getters = {
   getPlayers: state => (player = null) => {
@@ -71,6 +72,17 @@ const getters = {
 
   getCurrentGameStep: state => {
     return state.currentGameStep;
+  },
+
+  numberOfPlayers: state => {
+    return Object.values(state.players).filter(player => !!player.name)?.length ?? 0;
+  },
+
+  currentPlayerOrder: state => {
+    return Object.keys(PLAYER_ORDER).find(key => {
+      console.log(key);
+      return PLAYER_ORDER[key] === state.currentPlayer.type;
+    });
   }
 };
 

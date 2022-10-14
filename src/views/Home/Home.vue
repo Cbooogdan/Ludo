@@ -2,8 +2,11 @@
     <div class="home">
         <h1>Welcome to the Game, LUDO Game</h1>
 
-        <transition name="slide-up">
-            <start-screen
+        <transition
+                name="slide-up"
+                mode="out-in"
+        >
+            <chose-players
                     v-if="getCurrentGameStep === steps.START"
             />
 
@@ -16,17 +19,17 @@
 
 <script>
 import './Home.scss';
-import StartScreen from '@/components/StartScreen/StartScreen';
 import { GAME_STEPS } from '@/lookups/game-steps';
 import { mapGetters } from 'vuex';
 
+const ChosePlayers = () =>  import('@/components/ChosePlayers/ChosePlayers');
 const Game = () =>  import('@/components/Game/Game');
 
 export default {
     name: 'HomePage',
 
     components: {
-        StartScreen,
+        ChosePlayers,
         Game,
     },
 

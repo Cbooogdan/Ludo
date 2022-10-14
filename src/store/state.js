@@ -43,7 +43,7 @@ const state = {
         }
       ],
       color: 'red',
-      name: 'red',
+      name: '',
     },
     [PLAYERS.PLAYER_BLUE]: {
       pawns: [
@@ -77,7 +77,7 @@ const state = {
         }
       ],
       color: 'blue',
-      name: 'blue',
+      name: '',
     },
     [PLAYERS.PLAYER_YELLOW]: {
       pawns: [
@@ -111,7 +111,7 @@ const state = {
         }
       ],
       color: 'yellow',
-      name: 'yellow',
+      name: '',
     },
     [PLAYERS.PLAYER_GREEN]: {
       pawns: [
@@ -145,7 +145,7 @@ const state = {
         }
       ],
       color: 'green',
-      name: 'green',
+      name: '',
     },
   }
 };

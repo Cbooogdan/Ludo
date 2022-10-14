@@ -17,6 +17,7 @@
                     v-for="player in PLAYERS"
                     :key="`player-${player}`"
                     :player="player"
+                    :show-pawns="activePlayers.includes(player)"
             />
 
             <cell
@@ -94,6 +95,15 @@ export default {
             getPlayers: 'getPlayers',
         }),
 
+        activePlayers() {
+            return Object.keys(
+                Object.fromEntries(
+                    Object.entries(this.getPlayers())
+                        .filter(([playerType, player]) => !!player.name)
+                )
+            );
+        },
+
         getPlayerTurn() {
             return this.getPlayerName(this.getCurrentPlayer);
         },
@@ -111,7 +121,12 @@ export default {
         }),
 
         init() {
+            this.setPlayerWhoStart();
             this.triggerNextStep();
+        },
+
+        setPlayerWhoStart() {
+
         },
     },
 

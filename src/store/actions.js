@@ -7,7 +7,6 @@ const actions = {
   setMovingPawn({ commit, getters }, { pawnId, player }) {
     const pawn = getters.getPawn(pawnId, player);
     commit(MUTATIONS.SET_MOVING_PAWN, pawn);
-    // pawn.place.type = 'moving';
   },
 
   setPawnPlace({ commit, getters }, { pawnId, player, place }) {
@@ -42,12 +41,11 @@ const actions = {
     commit(MUTATIONS.SET_MOVEMENTS, diceValue === 6 ? 2 : 1);
   },
 
-  setNextPlayer({ commit, getters, dispatch }) {
-    let currentPlayerOrder = Object.keys(PLAYER_ORDER).find(key => {
-      return PLAYER_ORDER[key] === getters.getCurrentPlayer;
-    });
-
-    commit(MUTATIONS.SET_CURRENT_PLAYER, PLAYER_ORDER[++currentPlayerOrder % 4]);
+  setNextPlayer({ commit, getters }) {
+    commit(
+      MUTATIONS.SET_CURRENT_PLAYER,
+      PLAYER_ORDER[(getters.currentPlayerOrder + 1) % getters.numberOfPlayers]
+    );
   },
 
   setCurrentAction({ commit }, action) {

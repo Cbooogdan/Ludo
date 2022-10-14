@@ -11,7 +11,7 @@
                     class="home-start__pawn"
             >
                 <pawn
-                        v-if="pawn.player"
+                        v-if="pawn.player && showPawns"
                         :data="pawn"
                         :color="playerColor"
                 />
@@ -33,6 +33,10 @@ export default {
         player: {
             type: String,
             required: true
+        },
+        showPawns: {
+            type: Boolean,
+            default: false,
         }
     },
 
