@@ -79,10 +79,11 @@ const getters = {
   },
 
   currentPlayerOrder: state => {
-    return Object.keys(PLAYER_ORDER).find(key => {
-      console.log(key);
+    const playerNumber =  Object.keys(PLAYER_ORDER).find(key => {
       return PLAYER_ORDER[key] === state.currentPlayer.type;
     });
+
+    return parseInt(playerNumber);
   }
 };
 

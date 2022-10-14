@@ -1,61 +1,76 @@
 <template>
     <div class="choose-players">
-        <h2>Enter player name</h2>
+        <h2 class="choose-players__title">
+            Choose players
+        </h2>
 
-        <div
-                class="choose-players__player"
-                v-for="(player, indexPlayer) in players"
-                :key="`player-${indexPlayer}`"
-        >
-            <input
-                    class="choose-players__player-name"
-                    type="text"
-                    name="player-name"
-                    v-model="player.name"
+        <div class="choose-players__player-wrapper">
+            <div
+                    class="choose-players__player player"
+                    v-for="(player, indexPlayer) in players"
+                    :key="`player-${indexPlayer}`"
             >
-
-            <div class="choose-players__color-picker color-picker">
-                <div
-                        class="color-picker__button"
-                        @click="player.dropdownState = !player.dropdownState"
+                <button
+                        class="player__button"
+                        :class="{ 'active': currentPlayerView === indexPlayer }"
+                        @click="setPlayerView(indexPlayer)"
                 >
-                    <template v-if="player.color">
-                        <span :style="{background: player.color}" />
-                        {{ player.color }}
-                    </template>
-
-                    <span v-else>
-                        Color
+                    <span>
+                        {{ indexPlayer + 1 }}
                     </span>
-                </div>
 
-                <ul
-                        class="color-picker__dropdown"
-                        v-if="remainingColors.length"
-                        v-show="player.dropdownState"
-                >
-                    <li
-                            v-for="(color, index) in remainingColors"
-                            :key="`color-${index}`"
-                            @click="setColor(player, color)"
+                    <span
+                            class="player__remove"
+                            v-if="players.length > 2"
+                            @click="handleRemovePlayer(player)"
                     >
-                        <span :style="{background: color.color}" /> {{ color.name }}
-                    </li>
-                </ul>
+                        X
+                    </span>
+                </button>
             </div>
 
-            <div class="choose-players__remove-wrapper">
-                <span
-                        class="choose-players__remove"
-                        v-if="indexPlayer !== 0"
-                        @click="handleRemovePlayer(player)"
+            <div
+                    v-if="players.length <= 3"
+                    class="choose-players__player player"
+            >
+                <button
+                        class="player__button"
+                        @click="addMorePlayers"
                 >
-                    X
-                </span>
+                    <span>
+                        +
+                    </span>
+                </button>
             </div>
         </div>
 
-        <button @click="handleStart">
+        <div class="choose-players__data">
+            <input
+                    class="choose-players__name"
+                    type="text"
+                    name="player-name"
+                    v-model="currentPlayerData.name"
+            >
+
+            <div class="choose-players__color-wrapper">
+                <span
+                        v-for="(color, index) in colors"
+                        :key="`color-${index}`"
+                        class="choose-players__color"
+                        :class="{
+                            'selected': currentPlayerData.color === color,
+                            'disabled': !remainingColors.includes(color) && currentPlayerData.color !== color,
+                        }"
+                        :style="{background: color}"
+                        @click="remainingColors.includes(color) ? setColor(currentPlayerData, color) : null"
+                />
+            </div>
+        </div>
+
+        <button
+                class="button"
+                @click="handleStart"
+        >
             Start
         </button>
     </div>
@@ -68,26 +83,14 @@ import { COLOR_TO_PLAYER } from '@/lookups/player';
 
 
 const COLORS = [
-    {
-        color: 'blue',
-        name: 'Blue'
-    },
-    {
-        color: 'yellow',
-        name: 'Yellow'
-    },
-    {
-        color: 'red',
-        name: 'Red'
-    },
-    {
-        color: 'green',
-        name: 'Green'
-    }
+    'blue',
+    'yellow',
+    'red',
+    'green',
 ];
 
 export default {
-    name: 'ChosePlayers',
+    name: 'ChoosePlayers',
 
     data() {
         return {
@@ -103,14 +106,19 @@ export default {
                 }
             ],
             colors: COLORS,
+            currentPlayerView: 0,
         };
     },
 
     computed: {
         remainingColors() {
             const colorsUsed = Object.values(this.players).map(player => player.color);
-            return Object.values(this.colors).filter(color => !colorsUsed.includes(color.color));
-        }
+            return this.colors.filter(color => !colorsUsed.includes(color));
+        },
+
+        currentPlayerData() {
+            return this.players[this.currentPlayerView];
+        },
     },
 
     methods: {
@@ -135,33 +143,29 @@ export default {
         },
 
         setColor(player, color) {
-            player.color = color.color;
+            player.color = color;
             player.dropdownState = false;
         },
 
         handleRemovePlayer(removedPlayer) {
             this.players = this.players.filter(player => player !== removedPlayer);
+        },
+
+        setPlayerView(playerIndex) {
+            this.currentPlayerView = playerIndex;
+        },
+
+        addMorePlayers() {
+            if (this.players.length > 3) {
+                return;
+            }
+
+            this.players.push({
+                name: '',
+                color: '',
+                dropdownState: false,
+            });
         }
     },
-
-    watch: {
-        'players': {
-            deep: true,
-            immediate: true,
-            handler(players) {
-                const areAllFieldsFilled = players.every(player => {
-                    return !!player?.name && player?.color;
-                });
-
-                if (areAllFieldsFilled && players.length <= 3) {
-                    this.players.push({
-                        name: '',
-                        color: '',
-                        dropdownState: false,
-                    });
-                }
-            }
-        }
-    }
 };
 </script>
