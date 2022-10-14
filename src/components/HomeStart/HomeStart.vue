@@ -1,7 +1,7 @@
 <template>
     <div
             class="home-start"
-            :class="getPlayerBlockOrder(player)"
+            :class="getPlayerClass"
             :style="homeStyle"
     >
         <div class="home-start__wrapper">
@@ -13,10 +13,14 @@
                 <pawn
                         v-if="pawn.player && showPawns"
                         :data="pawn"
-                        :color="playerColor"
+                        :color="getPlayerColor"
                 />
             </div>
         </div>
+
+        <p class="home-start__name">
+            {{ getPlayerName }}
+        </p>
     </div>
 </template>
 
@@ -47,6 +51,7 @@ export default {
     computed: {
         ...mapGetters({
             getPlayers: 'getPlayers',
+            getCurrentPlayer: 'getCurrentPlayer',
         }),
 
         players() {
@@ -68,8 +73,16 @@ export default {
                 });
         },
 
-        playerColor() {
+        getPlayerColor() {
             return this.players(this.player).color;
+        },
+
+        getPlayerName() {
+            return this.players(this.player).name;
+        },
+
+        isCurrentPlayer() {
+            return this.getCurrentPlayer === this.player;
         },
 
         homeStyle() {
@@ -92,30 +105,33 @@ export default {
 
             return {
                 'margin': margin,
-                'background-color': this.playerColor,
+                'background-color': this.getPlayerColor,
             };
         },
-    },
 
-    methods: {
-        getPlayerBlockOrder(player) {
+        getPlayerClass() {
             let order = null;
 
-            switch (player) {
+            switch (this.player) {
                 case PLAYERS.PLAYER_RED:
-                    return '-order-1';
+                    order = '-order-1';
+                    break;
                 case PLAYERS.PLAYER_BLUE:
-                    return '-order-2';
+                    order = '-order-2';
+                    break;
                 case PLAYERS.PLAYER_YELLOW:
-                    return '-order-4';
+                    order = '-order-4';
+                    break;
                 case PLAYERS.PLAYER_GREEN:
-                    return '-order-3';
+                    order = '-order-3';
+                    break;
             }
 
             return {
-                'order': order,
+                [order]: true,
+                '-faded': !this.isCurrentPlayer,
             };
         }
-    }
+    },
 };
 </script>
