@@ -1,13 +1,19 @@
 <template>
     <div class="home">
-        <h1>Welcome to the Game, LUDO Game</h1>
+        <h1 class="home__title">
+            Welcome to the Game, LUDO Game
+        </h1>
 
         <transition
                 name="slide-up"
                 mode="out-in"
         >
-            <choose-players
+            <start-screen
                     v-if="getCurrentGameStep === steps.START"
+            />
+
+            <choose-players
+                    v-if="getCurrentGameStep === steps.PLAYERS"
             />
 
             <game
@@ -21,6 +27,7 @@
 import './Home.scss';
 import { GAME_STEPS } from '@/lookups/game-steps';
 import { mapGetters } from 'vuex';
+import StartScreen from '@/components/StartScreen/StartScreen';
 
 const ChoosePlayers = () =>  import('@/components/ChoosePlayers/ChoosePlayers');
 const Game = () =>  import('@/components/Game/Game');
@@ -29,6 +36,7 @@ export default {
     name: 'HomePage',
 
     components: {
+        StartScreen,
         ChoosePlayers,
         Game,
     },
