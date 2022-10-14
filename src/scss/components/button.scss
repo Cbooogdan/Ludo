@@ -1,0 +1,23 @@
+@import '../variables';
+
+.button {
+  max-width: 200px;
+  width: 100%;
+  background-color: $cornflower-blue;
+  color: white;
+  border: none;
+  height: 40px;
+  border-radius: 6px;
+  transition: all 0.25s linear;
+  font-size: 18px;
+
+  &[disabled] {
+    opacity: 0.6;
+  }
+  &:hover, &:active {
+    &:not([disabled]) {
+      background-color: $cornflower-blue-dark;
+      cursor: pointer;
+    }
+  }
+}
