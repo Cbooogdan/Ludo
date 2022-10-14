@@ -6,7 +6,7 @@
                 name="slide-up"
                 mode="out-in"
         >
-            <chose-players
+            <choose-players
                     v-if="getCurrentGameStep === steps.START"
             />
 
@@ -22,14 +22,14 @@ import './Home.scss';
 import { GAME_STEPS } from '@/lookups/game-steps';
 import { mapGetters } from 'vuex';
 
-const ChosePlayers = () =>  import('@/components/ChosePlayers/ChosePlayers');
+const ChoosePlayers = () =>  import('@/components/ChoosePlayers/ChoosePlayers');
 const Game = () =>  import('@/components/Game/Game');
 
 export default {
     name: 'HomePage',
 
     components: {
-        ChosePlayers,
+        ChoosePlayers,
         Game,
     },
 

@@ -1,20 +1,20 @@
 <template>
-    <div class="start-screen">
+    <div class="choose-players">
         <h2>Enter player name</h2>
 
         <div
-                class="start-screen__player"
+                class="choose-players__player"
                 v-for="(player, indexPlayer) in players"
                 :key="`player-${indexPlayer}`"
         >
             <input
-                    class="start-screen__player-name"
+                    class="choose-players__player-name"
                     type="text"
                     name="player-name"
                     v-model="player.name"
             >
 
-            <div class="start-screen__color-picker color-picker">
+            <div class="choose-players__color-picker color-picker">
                 <div
                         class="color-picker__button"
                         @click="player.dropdownState = !player.dropdownState"
@@ -44,9 +44,9 @@
                 </ul>
             </div>
 
-            <div class="start-screen__remove-wrapper">
+            <div class="choose-players__remove-wrapper">
                 <span
-                        class="start-screen__remove"
+                        class="choose-players__remove"
                         v-if="indexPlayer !== 0"
                         @click="handleRemovePlayer(player)"
                 >
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import './StartScreen.scss';
+import './ChoosePlayers.scss';
 import { mapActions } from 'vuex';
 import { COLOR_TO_PLAYER } from '@/lookups/player';
 
@@ -87,7 +87,7 @@ const COLORS = [
 ];
 
 export default {
-    name: 'StartScreen',
+    name: 'ChosePlayers',
 
     data() {
         return {
