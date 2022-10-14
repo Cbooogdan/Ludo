@@ -13,5 +13,5 @@
 </template>
 
 <style lang="scss">
-    @import "App";
+    @import 'App';
 </style>
