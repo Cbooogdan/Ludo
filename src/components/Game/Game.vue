@@ -1,14 +1,6 @@
 <template>
     <div class="game">
-        <template v-if="!playerWonMessage">
-            <h2 class="">
-                Player Turn: {{ getPlayerTurn }}
-            </h2>
-
-            <p>{{ getCurrentAction }}</p>
-        </template>
-
-        <template v-else>
+        <template v-if="playerWonMessage">
             <h2>{{ playerWonMessage }}</h2>
         </template>
 
@@ -102,10 +94,6 @@ export default {
                         .filter(([playerType, player]) => !!player.name)
                 )
             );
-        },
-
-        getPlayerTurn() {
-            return this.getPlayerName(this.getCurrentPlayer);
         },
 
         playerWonMessage() {
