@@ -96,14 +96,14 @@ export default {
         return {
             players: [
                 {
-                    name: 'Player Blue',
-                    color: 'blue',
+                    name: 'Player Yellow',
+                    color: 'yellow',
                     dropdownState: false,
                 }, {
                     name: 'Player Red',
                     color: 'red',
                     dropdownState: false,
-                }
+                },
             ],
             colors: COLORS,
             currentPlayerView: 0,
@@ -165,6 +165,8 @@ export default {
                 color: '',
                 dropdownState: false,
             });
+
+            this.setPlayerView(this.players.length - 1);
         }
     },
 };

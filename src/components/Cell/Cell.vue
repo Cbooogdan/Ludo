@@ -2,7 +2,7 @@
     <div
             class="cell"
             :style="{...getPositionStyle, ...getColorStyle}"
-            @drop="onDrop($event, 1)"
+            @drop="onDrop"
             @dragover.prevent
             @dragenter.prevent
             @dragend.prevent.stop

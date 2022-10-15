@@ -61,6 +61,7 @@ import { PLAYERS } from '@/lookups/player';
 import Dice from '@/components/Dice/Dice';
 import { mapActions, mapGetters } from 'vuex';
 import { CELL_TYPES } from '@/lookups/cell';
+import { shuffle } from 'lodash';
 
 export default {
     name: 'GameComponent',
@@ -80,20 +81,13 @@ export default {
 
     computed: {
         ...mapGetters({
-            getCurrentPlayer: 'getCurrentPlayer',
-            getPlayerName: 'getPlayerName',
-            getCurrentAction: 'getCurrentAction',
             getPlayerWhoWon: 'getPlayerWhoWon',
             getPlayers: 'getPlayers',
+            getActivePlayers: 'getActivePlayers',
         }),
 
         activePlayers() {
-            return Object.keys(
-                Object.fromEntries(
-                    Object.entries(this.getPlayers())
-                        .filter(([playerType, player]) => !!player.name)
-                )
-            );
+            return this.getActivePlayers;
         },
 
         playerWonMessage() {
@@ -105,16 +99,13 @@ export default {
 
     methods: {
         ...mapActions({
+            setActivePlayers: 'setActivePlayers',
             triggerNextStep: 'triggerNextStep',
         }),
 
         init() {
-            this.setPlayerWhoStart();
+            this.setActivePlayers();
             this.triggerNextStep();
-        },
-
-        setPlayerWhoStart() {
-
         },
     },
 

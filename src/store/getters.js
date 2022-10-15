@@ -1,5 +1,4 @@
 import { CELL_TYPES_TO_FINISH } from '@/lookups/cell';
-import { PLAYER_ORDER } from '@/lookups/player';
 
 const getters = {
   getPlayers: state => (player = null) => {
@@ -57,11 +56,12 @@ const getters = {
   },
 
   getPlayerWhoWon: state => {
-    const playerWhoWon = Object.entries(state.players).filter(([playerType, player]) => {
-      return player.pawns.every(pawn => {
-        return CELL_TYPES_TO_FINISH.includes(pawn.place.type);
-      });
-    })[0];
+    const playerWhoWon = Object.entries(state.players)
+      .filter(([playerType, player]) => {
+        return player.pawns.every(pawn => {
+          return CELL_TYPES_TO_FINISH.includes(pawn.place.type);
+        });
+      })[0];
 
     if (playerWhoWon?.length) {
       return playerWhoWon[0];
@@ -74,17 +74,13 @@ const getters = {
     return state.currentGameStep;
   },
 
-  numberOfPlayers: state => {
+  getNumberOfPlayers: state => {
     return Object.values(state.players).filter(player => !!player.name)?.length ?? 0;
   },
 
-  currentPlayerOrder: state => {
-    const playerNumber =  Object.keys(PLAYER_ORDER).find(key => {
-      return PLAYER_ORDER[key] === state.currentPlayer.type;
-    });
-
-    return parseInt(playerNumber);
-  }
+  getActivePlayers: state => {
+    return state.activePlayers;
+  },
 };
 
 export default getters;

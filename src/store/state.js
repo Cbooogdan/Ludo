@@ -3,9 +3,10 @@ import { GAME_STEPS } from '@/lookups/game-steps';
 
 const state = {
   currentPlayer: {
-    type: PLAYERS.PLAYER_BLUE,
+    type: null,
     movementsLeft: 0
   },
+  activePlayers: [],
   currentAction: null,
   currentDice: null,
   movingPawn: null,

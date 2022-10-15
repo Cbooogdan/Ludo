@@ -32,6 +32,10 @@ const mutations = {
 
   [MUTATIONS.SET_PLAYER_NAME](state, { player, name }) {
     player.name = name;
+  },
+
+  [MUTATIONS.SET_ACTIVE_PLAYERS](state, players) {
+    state.activePlayers = players;
   }
 };
 

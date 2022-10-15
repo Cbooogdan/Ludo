@@ -10,13 +10,6 @@ export const PLAYERS = {
   PLAYER_GREEN,
 };
 
-export const PLAYER_ORDER = {
-  0: PLAYER_RED,
-  1: PLAYER_BLUE,
-  2: PLAYER_YELLOW,
-  3: PLAYER_GREEN,
-};
-
 export const COLOR_TO_PLAYER = {
   'red': PLAYER_RED,
   'blue': PLAYER_BLUE,

@@ -1,7 +1,7 @@
 import { MUTATIONS } from '@/store/mutation-types';
-import { PLAYER_ORDER } from '@/lookups/player';
 import { PLAYER_ACTIONS } from '@/lookups/player';
 import { GAME_STEPS } from '@/lookups/game-steps';
+import { shuffle } from 'lodash';
 
 const actions = {
   setMovingPawn({ commit, getters }, { pawnId, player }) {
@@ -41,10 +41,11 @@ const actions = {
     commit(MUTATIONS.SET_MOVEMENTS, diceValue === 6 ? 2 : 1);
   },
 
-  setNextPlayer({ commit, getters }) {
+  setNextPlayer({ state, commit, getters }) {
+    const playerNumber =  parseInt(getters.getActivePlayers.indexOf(state.currentPlayer.type));
     commit(
       MUTATIONS.SET_CURRENT_PLAYER,
-      PLAYER_ORDER[(getters.currentPlayerOrder + 1) % getters.numberOfPlayers]
+      getters.getActivePlayers[(playerNumber + 1) % getters.getNumberOfPlayers]
     );
   },
 
@@ -53,6 +54,10 @@ const actions = {
   },
 
   triggerNextStep({ dispatch, getters }) {
+    if (!getters.getCurrentPlayer) {
+      dispatch('setNextPlayer');
+    }
+
     switch (getters.getCurrentAction) {
       case PLAYER_ACTIONS.rollDice:
         dispatch('setCurrentAction', PLAYER_ACTIONS.movePawn);
@@ -74,6 +79,17 @@ const actions = {
     }
   },
 
+  setActivePlayers({ commit, getters }) {
+    const activePlayers = Object.keys(
+      Object.fromEntries(
+        Object.entries(getters.getPlayers())
+          .filter(([playerType, player]) => !!player.name)
+      )
+    );
+
+    commit(MUTATIONS.SET_ACTIVE_PLAYERS, shuffle(activePlayers) ?? []);
+  },
+
   setCurrentGameStep({ commit }, step) {
     commit(MUTATIONS.SET_CURRENT_GAME_STEP, step);
   },
@@ -88,7 +104,6 @@ const actions = {
   },
 
   decreaseCurrentGameStep({ commit, getters }) {
-    const maxSteps = Object.keys(GAME_STEPS).length;
     const currentStep = getters.getCurrentGameStep;
 
     if (currentStep > 1) {
