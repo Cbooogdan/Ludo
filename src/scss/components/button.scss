@@ -20,4 +20,33 @@
       cursor: pointer;
     }
   }
+
+  &__arrow {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 50px;
+    height: 4px;
+    background-color: #fff;
+  }
+
+  &__arrow::after,
+  &__arrow::before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 4px;
+    left: -4px;
+    background-color: #fff;
+  }
+
+  &__arrow::after {
+    top: 5px;
+    transform: rotate(45deg);
+  }
+
+  &__arrow::before {
+    top: -5px;
+    transform: rotate(-45deg);
+  }
 }

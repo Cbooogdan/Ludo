@@ -65,27 +65,36 @@ export default {
             }, 350);
         },
 
-        jumpTo(digit, n){
+        jumpTo(digit, n) {
             digit.dataset['num'] = n;
             digit.getElementsByClassName('base')[0].innerHTML = n;
         },
 
-        updateGroup(group, n, flip) {
+        updateGroup(group, number, flip) {
             const digit1 = this.$refs['ten-'+group][0];
             const digit2 = this.$refs[group][0];
 
-            if(n.length === 1) n = '0'+n;
+            if(number.length === 1) {
+                number = `0${number}`;
+            }
 
-            const num1 = n.substr(0, 1);
-            const num2 = n.substr(1, 1);
+            const num1 = number.substr(0, 1);
+            const num2 = number.substr(1, 1);
 
             if(digit1?.dataset['num'] !== num1) {
-                if(flip) this.flipTo(digit1, num1);
-                else this.jumpTo(digit1, num1);
+                if(flip) {
+                    this.flipTo(digit1, num1);
+                } else {
+                    this.jumpTo(digit1, num1);
+                }
             }
+
             if(digit2?.dataset['num'] !== num2) {
-                if(flip) this.flipTo(digit2, num2);
-                else this.jumpTo(digit2, num2);
+                if(flip) {
+                    this.flipTo(digit2, num2);
+                } else {
+                    this.jumpTo(digit2, num2);
+                }
             }
         },
 

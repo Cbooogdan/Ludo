@@ -1,7 +1,9 @@
 <template>
     <div class="home">
         <h1 class="home__title">
-            Welcome to the Game, LUDO Game
+            Welcome to the Game,
+            <br>
+            LUDO Game
         </h1>
 
         <transition

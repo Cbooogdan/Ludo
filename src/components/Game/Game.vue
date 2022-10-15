@@ -9,7 +9,7 @@
                     class="game__button button"
                     @click="goToChoosePlayers"
             >
-                ←
+                <span class="button__arrow" />
             </button>
 
             <timer-component
