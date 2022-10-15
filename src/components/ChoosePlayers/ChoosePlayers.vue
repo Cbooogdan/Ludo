@@ -148,6 +148,12 @@ export default {
         },
 
         handleRemovePlayer(removedPlayer) {
+            const playerIndex = this.players.indexOf(removedPlayer);
+
+            if (this.currentPlayerView === playerIndex) {
+                this.currentPlayerView = 0;
+            }
+
             this.players = this.players.filter(player => player !== removedPlayer);
         },
 
