@@ -1,7 +1,18 @@
 .game {
-  margin-top: 40px;
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 650px;
+    width: 100%;
+    margin: 0 auto;
+  }
 
-  &-content {
+  &__button {
+    max-width: 124px;
+  }
+
+  &__content {
     display: flex;
     flex-wrap: wrap;
     position: relative;

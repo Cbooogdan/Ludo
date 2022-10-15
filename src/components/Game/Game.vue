@@ -4,7 +4,31 @@
             <h2>{{ playerWonMessage }}</h2>
         </template>
 
-        <div class="game-content">
+        <div class="game__top">
+            <button
+                    class="game__button button"
+                    @click="goToChoosePlayers"
+            >
+                ←
+            </button>
+
+            <timer-component
+                    ref="timerComponent"
+                    v-model="timeLapsedInSeconds"
+            />
+
+            <button
+                    class="game__button button"
+                    @click="handleResetGame"
+            >
+                Reset
+            </button>
+        </div>
+
+        <div
+                :key="`game-${resetGameKey}`"
+                class="game__content"
+        >
             <home-start
                     v-for="player in PLAYERS"
                     :key="`player-${player}`"
@@ -61,12 +85,14 @@ import { PLAYERS } from '@/lookups/player';
 import Dice from '@/components/Dice/Dice';
 import { mapActions, mapGetters } from 'vuex';
 import { CELL_TYPES } from '@/lookups/cell';
-import { shuffle } from 'lodash';
+
+const TimerComponent = () => import('@/components/Timer/Timer');
 
 export default {
     name: 'GameComponent',
 
     components: {
+        TimerComponent,
         Dice,
         HomeStart,
         Cell
@@ -76,6 +102,8 @@ export default {
         return {
             PLAYERS,
             CELL_TYPES,
+            timeLapsedInSeconds: 0,
+            resetGameKey: 0,
         };
     },
 
@@ -101,11 +129,27 @@ export default {
         ...mapActions({
             setActivePlayers: 'setActivePlayers',
             triggerNextStep: 'triggerNextStep',
+            decreaseCurrentGameStep: 'decreaseCurrentGameStep',
+            resetGame: 'resetGame',
         }),
 
         init() {
             this.setActivePlayers();
             this.triggerNextStep();
+        },
+
+        goToChoosePlayers() {
+            this.resetGame();
+            this.decreaseCurrentGameStep();
+        },
+
+        handleResetGame() {
+            this.timeLapsedInSeconds = 0;
+            this.$refs.timerComponent.deleteInterval();
+            this.$refs.timerComponent.createInterval();
+            this.resetGame();
+            this.init();
+            this.resetGameKey += 1;
         },
     },
 

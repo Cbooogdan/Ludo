@@ -1,5 +1,6 @@
 import { MUTATIONS } from '@/store/mutation-types';
 import { cloneDeep } from 'lodash';
+import { defaultState } from '@/store/state';
 
 const mutations = {
   [MUTATIONS.SET_MOVING_PAWN](state, pawn = null) {
@@ -36,7 +37,11 @@ const mutations = {
 
   [MUTATIONS.SET_ACTIVE_PLAYERS](state, players) {
     state.activePlayers = players;
-  }
+  },
+
+  [MUTATIONS.RESET](state) {
+    Object.assign(state, defaultState());
+  },
 };
 
 export default mutations;

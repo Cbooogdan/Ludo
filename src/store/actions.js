@@ -1,7 +1,7 @@
 import { MUTATIONS } from '@/store/mutation-types';
 import { PLAYER_ACTIONS } from '@/lookups/player';
 import { GAME_STEPS } from '@/lookups/game-steps';
-import { shuffle } from 'lodash';
+import { flatten, shuffle } from 'lodash';
 
 const actions = {
   setMovingPawn({ commit, getters }, { pawnId, player }) {
@@ -114,6 +114,28 @@ const actions = {
   setPlayerName({ commit, getters }, { playerType, name }) {
     const player = getters.getPlayers(playerType);
     commit(MUTATIONS.SET_PLAYER_NAME, { player, name });
+  },
+
+  resetGame({ commit, getters, dispatch }) {
+    const playerNameMapping = getters.getActivePlayers.map(
+      playerType => {
+        return {
+          [playerType]: getters.getPlayers(playerType)?.name
+        };
+      }
+    );
+
+    commit(MUTATIONS.RESET);
+
+    Object.values(playerNameMapping).forEach(player => {
+      const name = Object.values(player)[0];
+      const type = Object.keys(player)[0];
+
+      dispatch('setPlayerName', {
+        playerType: type,
+        name
+      });
+    });
   }
 };
 
