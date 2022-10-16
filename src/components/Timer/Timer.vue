@@ -52,14 +52,14 @@ export default {
             digit.getElementsByClassName('under')[0].dataset['content'] = n;
 
             for(const element of digit.getElementsByClassName('flap')) {
-                element.style['display'] = 'block';
+                element.style.display = 'block';
             }
 
             setTimeout(() => {
                 digit.getElementsByClassName('base')[0].innerHTML = n;
 
                 for(const element of digit.getElementsByClassName('flap')) {
-                    element.style['display'] = 'none';
+                    element.style.display = 'none';
                 }
 
             }, 350);
@@ -73,6 +73,19 @@ export default {
         updateGroup(group, number, flip) {
             const digit1 = this.$refs['ten-'+group][0];
             const digit2 = this.$refs[group][0];
+
+            console.log(digit1.dataset['num']);
+            if (
+                number === '0' &&
+                digit1.dataset['num'] === '0' &&
+                digit1.dataset['num'] === '0'
+            ) {
+                digit1.style.display = 'none';
+                digit2.style.display = 'none';
+            } else {
+                digit1.style.display = 'block';
+                digit2.style.display = 'block';
+            }
 
             if(number.length === 1) {
                 number = `0${number}`;

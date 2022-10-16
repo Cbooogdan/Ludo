@@ -25,6 +25,13 @@
     &:last-child {
       margin-right: 0;
     }
+
+    &.ten-hour,
+    &.hour,
+    &.ten-min,
+    &.min {
+      display: none;
+    }
   }
 
   .base {
