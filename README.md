@@ -1,24 +1,13 @@
-# ludo
+# LUDO
 
-## Project setup
-```
-npm install
-```
+You can play the game [HERE](https://bogdancorolea-ludo.netlify.app).
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### Future developments
 
-### Compiles and minifies for production
-```
-npm run build
-```
+- Implement online version
+- Option to play with a bot
+- Improve design of the game
+- Create strict conditions for placing pawns
+- Automatically move pawn when only one move can be done
+- Create a time limit for player actions
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
