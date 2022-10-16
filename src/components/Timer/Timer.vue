@@ -14,6 +14,7 @@
         </div>
     </div>
 </template>
+
 <script>
 import './Timer.scss';
 
@@ -44,69 +45,67 @@ export default {
     },
 
     methods: {
-        flipTo(digit, n) {
-            const current = digit.dataset['num'];
-            digit.dataset['num'] = n;
-            digit.getElementsByClassName('front')[0].dataset['content'] = current;
-            digit.getElementsByClassName('back')[0].dataset['content'] = n;
-            digit.getElementsByClassName('under')[0].dataset['content'] = n;
+        flipTo(digitDom, value) {
+            const currentValue = digitDom.dataset['value'];
+            digitDom.dataset['value'] = value;
+            digitDom.getElementsByClassName('front')[0].dataset['content'] = currentValue;
+            digitDom.getElementsByClassName('back')[0].dataset['content'] = value;
+            digitDom.getElementsByClassName('under')[0].dataset['content'] = value;
 
-            for(const element of digit.getElementsByClassName('flap')) {
+            for(const element of digitDom.getElementsByClassName('flap')) {
                 element.style.display = 'block';
             }
 
             setTimeout(() => {
-                digit.getElementsByClassName('base')[0].innerHTML = n;
+                digitDom.getElementsByClassName('base')[0].innerHTML = value;
 
-                for(const element of digit.getElementsByClassName('flap')) {
+                for(const element of digitDom.getElementsByClassName('flap')) {
                     element.style.display = 'none';
                 }
-
             }, 350);
         },
 
-        jumpTo(digit, n) {
-            digit.dataset['num'] = n;
-            digit.getElementsByClassName('base')[0].innerHTML = n;
+        jumpTo(digitDom, value) {
+            digitDom.dataset['value'] = value;
+            digitDom.getElementsByClassName('base')[0].innerHTML = value;
         },
 
-        updateGroup(group, number, flip) {
-            const digit1 = this.$refs['ten-'+group][0];
-            const digit2 = this.$refs[group][0];
+        updateGroup(group, value, flip) {
+            const firstDigitDom = this.$refs['ten-'+group][0];
+            const secondDigitDom = this.$refs[group][0];
 
-            console.log(digit1.dataset['num']);
             if (
-                number === '0' &&
-                digit1.dataset['num'] === '0' &&
-                digit1.dataset['num'] === '0'
+                value === '0' &&
+                firstDigitDom.dataset['value'] === '0' &&
+                firstDigitDom.dataset['value'] === '0'
             ) {
-                digit1.style.display = 'none';
-                digit2.style.display = 'none';
+                firstDigitDom.style.display = 'none';
+                secondDigitDom.style.display = 'none';
             } else {
-                digit1.style.display = 'block';
-                digit2.style.display = 'block';
+                firstDigitDom.style.display = 'block';
+                secondDigitDom.style.display = 'block';
             }
 
-            if(number.length === 1) {
-                number = `0${number}`;
+            if(value.length === 1) {
+                value = `0${value}`;
             }
 
-            const num1 = number.substr(0, 1);
-            const num2 = number.substr(1, 1);
+            const firstDigitValue = value.substr(0, 1);
+            const secondDigitValue = value.substr(1, 1);
 
-            if(digit1?.dataset['num'] !== num1) {
+            if(firstDigitDom?.dataset['value'] !== firstDigitValue) {
                 if(flip) {
-                    this.flipTo(digit1, num1);
+                    this.flipTo(firstDigitDom, firstDigitValue);
                 } else {
-                    this.jumpTo(digit1, num1);
+                    this.jumpTo(firstDigitDom, firstDigitValue);
                 }
             }
 
-            if(digit2?.dataset['num'] !== num2) {
+            if(secondDigitDom?.dataset['value'] !== secondDigitValue) {
                 if(flip) {
-                    this.flipTo(digit2, num2);
+                    this.flipTo(secondDigitDom, secondDigitValue);
                 } else {
-                    this.jumpTo(digit2, num2);
+                    this.jumpTo(secondDigitDom, secondDigitValue);
                 }
             }
         },
@@ -147,6 +146,7 @@ export default {
         value(newValue) {
             this.timeLapsedInSeconds = newValue;
         },
+
         timeLapsedInSeconds: {
             deep: true,
             immediate: true,

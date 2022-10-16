@@ -1,9 +1,6 @@
-.timer {
-  $flipColour: #fff;
-  $flipColourDark: darken($flipColour, 35%);
-  $textColour: #333;
-  $textColourDark: darken($textColour, 35%);
+@import './src/scss/variables';
 
+.timer {
   display: flex;
   justify-content: center;
 
