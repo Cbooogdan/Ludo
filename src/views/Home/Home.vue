@@ -22,6 +22,8 @@
                     v-if="getCurrentGameStep === steps.GAME"
             />
         </transition>
+
+        <footer-component />
     </div>
 </template>
 
@@ -29,15 +31,17 @@
 import './Home.scss';
 import { GAME_STEPS } from '@/lookups/game-steps';
 import { mapGetters } from 'vuex';
-import StartScreen from '@/components/StartScreen/StartScreen';
 
 const ChoosePlayers = () =>  import('@/components/ChoosePlayers/ChoosePlayers');
 const Game = () =>  import('@/components/Game/Game');
+const StartScreen = () =>  import('@/components/StartScreen/StartScreen');
+const FooterComponent = () =>  import('@/components/Footer/Footer');
 
 export default {
     name: 'HomePage',
 
     components: {
+        FooterComponent,
         StartScreen,
         ChoosePlayers,
         Game,
