@@ -12,6 +12,16 @@
     </div>
 </template>
 
+<script>
+export default {
+    name: 'AppMain',
+
+    mounted() {
+        document.title = 'Ludo';
+    }
+};
+</script>
+
 <style lang="scss">
     @import 'App';
 </style>
