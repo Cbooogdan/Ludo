@@ -2,8 +2,11 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import VueConfetti from 'vue-confetti';
 
 import './scss/foundation.scss';
+
+Vue.use(VueConfetti);
 
 Vue.config.productionTip = false;
 

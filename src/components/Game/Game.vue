@@ -1,9 +1,5 @@
 <template>
     <div class="game">
-        <template v-if="playerWonMessage">
-            <h2>{{ playerWonMessage }}</h2>
-        </template>
-
         <div class="game__top">
             <button
                     class="game__button button"
@@ -29,6 +25,19 @@
                 :key="`game-${resetGameKey}`"
                 class="game__content"
         >
+            <div
+                    v-if="getPlayerWonName"
+                    class="game__won"
+            >
+                <p>
+                    Player
+                    <br>
+                    {{ getPlayerWonName }}
+                    <br>
+                    won!
+                </p>
+            </div>
+
             <home-start
                     v-for="player in PLAYERS"
                     :key="`player-${player}`"
@@ -80,12 +89,12 @@
 import './Game.scss';
 
 import Cell from '@/components/Cell/Cell';
-import HomeStart from '@/components/HomeStart/HomeStart';
 import { PLAYERS } from '@/lookups/player';
 import Dice from '@/components/Dice/Dice';
 import { mapActions, mapGetters } from 'vuex';
 import { CELL_TYPES } from '@/lookups/cell';
 
+const HomeStart = () => import('@/components/HomeStart/HomeStart');
 const TimerComponent = () => import('@/components/Timer/Timer');
 
 export default {
@@ -118,11 +127,9 @@ export default {
             return this.getActivePlayers;
         },
 
-        playerWonMessage() {
-            return this.getPlayerWhoWon ?
-                `Player ${this.getPlayers(this.getPlayerWhoWon)?.name} won!` :
-                '';
-        }
+        getPlayerWonName() {
+            return this.getPlayers(this.getPlayerWhoWon)?.name;
+        },
     },
 
     methods: {
@@ -140,6 +147,7 @@ export default {
 
         goToChoosePlayers() {
             this.resetGame();
+            this.$confetti.stop();
             this.decreaseCurrentGameStep();
         },
 
@@ -148,13 +156,43 @@ export default {
             this.$refs.timerComponent.deleteInterval();
             this.$refs.timerComponent.createInterval();
             this.resetGame();
+            this.$confetti.stop();
             this.init();
             this.resetGameKey += 1;
         },
+
+        startConfetti() {
+            this.$confetti.start({
+                particlesPerFrame: 1,
+                defaultSize: 6,
+            });
+
+            setTimeout(() => {
+                this.$confetti.stop();
+            }, 4000);
+        }
     },
 
     mounted() {
         this.init();
-    }
+    },
+
+    watch: {
+        getPlayerWhoWon: {
+            immediate: true,
+            handler(newValue) {
+                if (!newValue) {
+                    return ;
+                }
+
+                this.timeLapsedInSeconds = 0;
+                this.startConfetti();
+
+                if (this.$refs?.timerComponent) {
+                    this.$refs.timerComponent.deleteInterval();
+                }
+            }
+        }
+    },
 };
 </script>

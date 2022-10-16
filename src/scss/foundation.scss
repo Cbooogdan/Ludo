@@ -9,3 +9,7 @@
 body {
   background-color: $concrete;
 }
+
+#confetti-canvas {
+  z-index: 10;
+}
