@@ -1,16 +1,22 @@
 <template>
     <div class="timer">
         <div
-                v-for="type in digitTypes"
-                :key="`type-${type}`"
-                :ref="type"
-                class="digit"
-                :class="type"
+                v-for="section in digitTypes"
+                :key="`section-${section}`"
+                class="timer__section"
         >
-            <span class="base" />
-            <div class="flap over front" />
-            <div class="flap over back" />
-            <div class="flap under" />
+            <div
+                    v-for="type in section"
+                    :key="`type-${type}`"
+                    :ref="type"
+                    class="timer__digit"
+                    :class="type"
+            >
+                <span class="base" />
+                <div class="flap over front" />
+                <div class="flap over back" />
+                <div class="flap under" />
+            </div>
         </div>
     </div>
 </template>
@@ -19,12 +25,18 @@
 import './Timer.scss';
 
 const DIGIT_TYPES = [
-    'ten-hour',
-    'hour',
-    'ten-min',
-    'min',
-    'ten-sec',
-    'sec',
+    [
+        'ten-hour',
+        'hour',
+    ],
+    [
+        'ten-min',
+        'min',
+    ],
+    [
+        'ten-sec',
+        'sec',
+    ],
 ];
 
 export default {
@@ -79,9 +91,11 @@ export default {
                 firstDigitDom.dataset['value'] === '0' &&
                 firstDigitDom.dataset['value'] === '0'
             ) {
+                firstDigitDom.parentElement.style.display = 'none';
                 firstDigitDom.style.display = 'none';
                 secondDigitDom.style.display = 'none';
             } else {
+                firstDigitDom.parentElement.style.display = 'flex';
                 firstDigitDom.style.display = 'block';
                 secondDigitDom.style.display = 'block';
             }

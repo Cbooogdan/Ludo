@@ -3,25 +3,23 @@
 .timer {
   display: flex;
   justify-content: center;
+  gap: 24px;
 
-  .digit {
+  &__section {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  &__digit {
     position: relative;
     width: 44px;
     height: 60px;
     background-color: $flipColour;
-    border-radius: 1vw;
+    border-radius: 6px;
     text-align: center;
     font-family: Oswald, sans-serif;
     font-size: 50px;
-    margin-right: 10px;
-
-    &:nth-child(2n+2) {
-      margin-right: 24px;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
 
     &.ten-hour,
     &.hour,
@@ -48,7 +46,7 @@
     background-color: $flipColour;
     left: 0;
     top: 0;
-    border-radius: 1vw 1vw 0 0;
+    border-radius: 6px 6px 0 0;
     transform-origin: 50% 100%;
     backface-visibility: hidden;
     overflow: hidden;
